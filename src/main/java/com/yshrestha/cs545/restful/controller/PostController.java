@@ -16,7 +16,6 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public ResponseEntity<List<PostDTO>> getPosts() {
         try {
@@ -35,10 +34,10 @@ public class PostController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<PostDTO> save(@RequestBody PostDTO post) {
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<PostDTO> save(@PathVariable long userId, @RequestBody PostDTO post) {
         try {
-            return new ResponseEntity<>(postService.save(post), HttpStatus.CREATED);
+            return new ResponseEntity<>(postService.save(userId, post), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
