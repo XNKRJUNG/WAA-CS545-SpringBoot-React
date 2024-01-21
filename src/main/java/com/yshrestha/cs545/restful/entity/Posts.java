@@ -1,12 +1,11 @@
 package com.yshrestha.cs545.restful.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +18,12 @@ public class Posts {
     private String title;
     private String content;
     private String author;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id")
+    private Collection<Comments> comments;
+
+    public void addComment(Comments commentObj){
+        comments.add(commentObj);
+    }
 }

@@ -11,4 +11,6 @@ public interface PostService {
 
     PostDTO save(Long userId, PostDTO post);
 
+    List<PostDTO> getPostByTitle(String title);
+
 }

@@ -51,7 +51,20 @@ public class UserServiceImpl implements UserService {
     public List<PostDTO> getPostsByUserId(Long userId) {
         return postRepository.findPostsByUserId(userId)
                 .stream()
-                .map(p -> new PostDTO(p.getId(), p.getTitle(), p.getContent(), p.getAuthor()))
+                .map(p -> new PostDTO(p.getId(), p.getTitle(), p.getContent(), p.getAuthor(), p.getComments()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UserDTO> getAllUsersWithMoreThanNPost(int n) {
+        return userRepository.getAllUsersWithMoreThanNPost(n)
+                .stream()
+                .map(user -> new UserDTO(user.getId(), user.getName(), user.getPosts()))
                 .collect(Collectors.toList());
     }
 

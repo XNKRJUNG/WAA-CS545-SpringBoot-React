@@ -15,4 +15,9 @@ public interface UserService {
 
     List<PostDTO> getPostsByUserId(Long userId);
 
+    void deleteUser(long id);
+
+    List<UserDTO> getAllUsersWithMoreThanNPost(int n);
+
+
 }

@@ -25,14 +25,14 @@ public class PostServiceImpl implements PostService {
     public List<PostDTO> getPosts() {
         return postRepository.findAll()
                 .stream()
-                .map(p -> new PostDTO(p.getId(), p.getTitle(), p.getContent(), p.getAuthor()))
+                .map(p -> new PostDTO(p.getId(), p.getTitle(), p.getContent(), p.getAuthor(), p.getComments()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public PostDTO getPost(Long postId) {
         Posts postRepoObj = postRepository.findById(postId).get();
-        return new PostDTO(postRepoObj.getId(), postRepoObj.getTitle(), postRepoObj.getContent(), postRepoObj.getAuthor());
+        return new PostDTO(postRepoObj.getId(), postRepoObj.getTitle(), postRepoObj.getContent(), postRepoObj.getAuthor(), postRepoObj.getComments());
     }
 
     @Override
@@ -51,7 +51,15 @@ public class PostServiceImpl implements PostService {
 
         // post.setId(postRepoObj.getId());
 //        return post;
-        return new PostDTO(postRepoObj.getId(), postRepoObj.getTitle(), postRepoObj.getContent(), postRepoObj.getAuthor());
+        return new PostDTO(postRepoObj.getId(), postRepoObj.getTitle(), postRepoObj.getContent(), postRepoObj.getAuthor(), postRepoObj.getComments());
+    }
+
+    @Override
+    public List<PostDTO> getPostByTitle(String title) {
+        return postRepository.findAllByTitleEquals(title)
+                .stream()
+                .map(p -> new PostDTO(p.getId(), p.getTitle(), p.getContent(), p.getAuthor(), p.getComments()))
+                .collect(Collectors.toList());
     }
 
 }

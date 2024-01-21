@@ -41,6 +41,11 @@ public class PostController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @GetMapping("/filter")
+    public ResponseEntity<List<PostDTO>> getAllPostsByTitle(@RequestParam(value = "title", required = false) String title){
+        List<PostDTO> posts = postService.getPostByTitle(title);
+        return ResponseEntity.ok(posts);
     }
 }
